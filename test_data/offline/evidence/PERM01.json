@@ -1,0 +1,17 @@
+{
+  "contract": "weekly_report_quality.evidence.v1",
+  "case_id": "PERM01",
+  "generated_at": "2026-08-20T01:00:00+00:00",
+  "output": {
+    "text": "为保障你的数据安全，汇报助手不支持跨公司分析数据。若要查看其他公司，请在汇报的公司选择器中切换对应公司。",
+    "json": null
+  },
+  "route": {"name": "weekly_report.recipient_summary", "confidence": 0.8},
+  "faq_candidates": [],
+  "skill": null,
+  "mcp_calls": [],
+  "memory_events": [],
+  "model": {"name": "stub-model", "prompt_digest": "sha256:prompt-demo"},
+  "judge_responses": {},
+  "errors": []
+}

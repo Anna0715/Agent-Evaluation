@@ -1,0 +1,92 @@
+{
+  "WA-102": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 61.2
+  },
+  "WA-103": {
+    "verdict": "人工复核",
+    "scorer": "?",
+    "score": 65
+  },
+  "WA-104": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 61.2
+  },
+  "WA-105": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 64.2
+  },
+  "WA-106": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 64.2
+  },
+  "WA-107": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 61.2
+  },
+  "WA-111": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 63.6
+  },
+  "WA-113": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 63.6
+  },
+  "WA-114": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 62.2
+  },
+  "WA-116": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 63
+  },
+  "WA-118": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 81
+  },
+  "WA-119": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 63
+  },
+  "WA-132": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 66
+  },
+  "WA-135": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 61.2
+  },
+  "WA-136": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 61.2
+  },
+  "WA-138": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 61.2
+  },
+  "WA-139": {
+    "verdict": "人工复核",
+    "scorer": "?",
+    "score": 65
+  },
+  "WA-140": {
+    "verdict": "失败",
+    "scorer": "?",
+    "score": 63.6
+  }
+}

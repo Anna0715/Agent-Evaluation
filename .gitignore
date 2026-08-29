@@ -1,0 +1,29 @@
+.idea
+*.pyc
+__pycache__/
+.pytest_cache/
+*.log
+.venv/
+.DS_Store
+
+# online / live runtime
+online/schedule/.env
+online/schedule/.run.pid
+online/schedule/.webhook_daily.json
+online/schedule/logs/
+online/schedule/com.zelto.report-agent-eval.plist
+online/.sync-staging/
+online/.pages-repo/
+online/eval-run-*.log
+live/schedule/.env
+live/schedule/.run.pid
+live/schedule/.webhook_daily.json
+live/schedule/logs/
+live/schedule/com.zelto.report-agent-eval.plist
+live/.sync-staging/
+live/.pages-repo/
+live/eval-run-*.log
+
+# packages offline runs
+testdata/weekly_report_quality/runs/logs/
+artifacts/offline-runs/

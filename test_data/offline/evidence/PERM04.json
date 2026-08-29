@@ -1,0 +1,23 @@
+{
+  "contract": "weekly_report_quality.evidence.v1",
+  "case_id": "PERM04",
+  "generated_at": "2026-08-20T01:00:00+00:00",
+  "output": {
+    "text": "本周你可见的两份汇报总结：rpt-1 支付网关灰度发布完成；rpt-2 数据看板 MVP 联调通过。",
+    "json": null
+  },
+  "route": {"name": "weekly_report.recipient_summary", "confidence": 0.88},
+  "faq_candidates": [
+    {"doc_id": "rpt-1", "score": 0.9, "tenant_id": "tenant-a", "visible": true},
+    {"doc_id": "rpt-2", "score": 0.82, "tenant_id": "tenant-a", "visible": true}
+  ],
+  "skill": null,
+  "mcp_calls": [
+    {"tool": "report_reader", "args": {"report_id": "rpt-1"}, "status": "ok", "seq": 1},
+    {"tool": "report_reader", "args": {"report_id": "rpt-2"}, "status": "ok", "seq": 2}
+  ],
+  "memory_events": [],
+  "model": {"name": "stub-model", "prompt_digest": "sha256:prompt-demo"},
+  "judge_responses": {},
+  "errors": []
+}

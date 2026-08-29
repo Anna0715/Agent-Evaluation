@@ -1,0 +1,53 @@
+{
+  "contract": "weekly_report_quality.case.v1",
+  "id": "TC01",
+  "version": 1,
+  "tags": ["seed", "happy-path"],
+  "input": {
+    "material": {
+      "current": "本周完成支付网关灰度发布，覆盖 30% 流量；风险：对账延迟未解决。",
+      "previous": "上周完成支付网关压测，计划本周灰度发布。"
+    },
+    "recipient": {"role": "manager"},
+    "context": {"tenant_id": "tenant-a", "user_id": "user-1"}
+  },
+  "expect": {
+    "route": {
+      "allowed": ["weekly_report.recipient_summary"],
+      "forbidden": ["general_chat"],
+      "min_confidence": 0.6
+    },
+    "faq": {
+      "top_k": 3,
+      "must_hit": ["faq-101"],
+      "must_not_hit": ["faq-999"],
+      "min_recall_at_k": 1.0,
+      "min_mrr": 0.5
+    },
+    "skill": {
+      "key": "weekly_report.summary",
+      "channel": "stable",
+      "required_tools": ["report_reader"]
+    },
+    "mcp": {
+      "required_calls": [
+        {"tool": "report_reader", "args_subset": {"report_id": "rpt-1"}, "min_count": 1, "max_count": 2}
+      ],
+      "forbidden_tools": ["contact_lookup"]
+    },
+    "output": {
+      "schema": {"required": ["summary", "risks"]},
+      "must_contain": ["支付网关"],
+      "must_not_contain": ["JWT"]
+    },
+    "grounding": {"required": true}
+  },
+  "oracle": {
+    "source": "human",
+    "reviewer": "barry",
+    "reviewed_at": "2026-08-20",
+    "confidence": 0.9,
+    "evidence": "seed case authored from real weekly-report structure"
+  },
+  "scoring": {}
+}

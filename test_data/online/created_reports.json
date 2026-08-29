@@ -1,0 +1,158 @@
+{
+  "login_user": "智本_anrou",
+  "company_name": "智本科技",
+  "created_count": 6,
+  "success_count": 6,
+  "created": [
+    {
+      "reportId": "2080258061703843840",
+      "case_id": "WR-001",
+      "category": 1,
+      "category_name": "日报",
+      "period_start": "2026-07-23",
+      "period_end": "2026-07-23",
+      "ok": true,
+      "draft_response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258061703843840"
+        }
+      },
+      "response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258061703843840"
+        }
+      }
+    },
+    {
+      "reportId": "2080258065587769344",
+      "case_id": "WR-013",
+      "category": 1,
+      "category_name": "日报",
+      "period_start": "2026-07-22",
+      "period_end": "2026-07-22",
+      "ok": true,
+      "draft_response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258065587769344"
+        }
+      },
+      "response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258065587769344"
+        }
+      }
+    },
+    {
+      "reportId": "2080258069446529024",
+      "case_id": "WR-002",
+      "category": 2,
+      "category_name": "周报",
+      "period_start": "2026-07-20",
+      "period_end": "2026-07-26",
+      "ok": true,
+      "draft_response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258069446529024"
+        }
+      },
+      "response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258069446529024"
+        }
+      }
+    },
+    {
+      "reportId": "2080258073338843136",
+      "case_id": "WR-008",
+      "category": 2,
+      "category_name": "周报",
+      "period_start": "2026-07-13",
+      "period_end": "2026-07-19",
+      "ok": true,
+      "draft_response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258073338843136"
+        }
+      },
+      "response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258073338843136"
+        }
+      }
+    },
+    {
+      "reportId": "2080258076773978112",
+      "case_id": "WR-011",
+      "category": 2,
+      "category_name": "周报",
+      "period_start": "2026-07-06",
+      "period_end": "2026-07-12",
+      "ok": true,
+      "draft_response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258076773978112"
+        }
+      },
+      "response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258076773978112"
+        }
+      }
+    },
+    {
+      "reportId": "2080258080515297280",
+      "case_id": "WR-003",
+      "category": 3,
+      "category_name": "月报",
+      "period_start": "2026-07-01",
+      "period_end": "2026-07-31",
+      "ok": true,
+      "draft_response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258080515297280"
+        }
+      },
+      "response": {
+        "errCode": 0,
+        "errMsg": "",
+        "errDlt": "",
+        "data": {
+          "reportId": "2080258080515297280"
+        }
+      }
+    }
+  ]
+}

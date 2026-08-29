@@ -1,0 +1,74 @@
+name: Publish Agent Quality Report
+
+on:
+  workflow_dispatch:
+    inputs:
+      date:
+        description: Report date (YYYY-MM-DD), empty = today UTC
+        required: false
+        default: ""
+      batch_id:
+        description: Sync batch id for logging
+        required: false
+        default: ""
+      no_webhook:
+        description: Skip IM webhook
+        required: false
+        default: "false"
+      force_webhook:
+        description: Force webhook even if already sent today
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Agent-Evaluation
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install openpyxl
+
+      - name: Clone Pages repo
+        env:
+          PAGES_GIT_URL: ${{ secrets.AGENT_REPORT_PAGES_GIT_URL }}
+        run: |
+          git clone "$PAGES_GIT_URL" /tmp/Agent_report
+
+      - name: Publish quality report
+        env:
+          QUALITY_WEBHOOK_URL: ${{ secrets.QUALITY_WEBHOOK_URL }}
+          QUALITY_WEBHOOK_AT_USERS: ${{ secrets.QUALITY_WEBHOOK_AT_USERS }}
+        run: |
+          STAGING="online/.sync-staging/xlsx"
+          XLSX="fixtures/online/周报追问Agent全面评测用例.xlsx"
+          if [[ -f "$STAGING" ]]; then
+            cp "$STAGING" "$XLSX"
+            echo "Using staging xlsx from dispatch sync"
+          fi
+          DATE="${{ github.event.inputs.date }}"
+          if [[ -z "$DATE" ]]; then
+            DATE="$(date -u +%F)"
+          fi
+          ARGS=(
+            --xlsx "$XLSX"
+            --date "$DATE"
+            --pages-repo /tmp/Agent_report
+            --batch-id "${{ github.event.inputs.batch_id }}"
+          )
+          if [[ "${{ github.event.inputs.no_webhook }}" == "true" ]]; then
+            ARGS+=(--no-webhook)
+          fi
+          if [[ "${{ github.event.inputs.force_webhook }}" == "true" ]]; then
+            ARGS+=(--force-webhook)
+          fi
+          python online/publish_quality_report.py "${ARGS[@]}"

@@ -1,0 +1,20 @@
+{
+  "contract": "weekly_report_quality.evidence.v1",
+  "case_id": "PERM05",
+  "generated_at": "2026-08-20T01:00:00+00:00",
+  "output": {
+    "text": "好的，已记住你的要求：以后总结使用精简格式，并增加风险预测模块。下次生成总结时会按此习惯输出。",
+    "json": null
+  },
+  "route": {"name": "weekly_report.recipient_summary", "confidence": 0.82},
+  "faq_candidates": [],
+  "skill": null,
+  "mcp_calls": [],
+  "memory_events": [
+    {"op": "write", "tenant_id": "tenant-a", "user_id": "user-1"},
+    {"op": "read", "tenant_id": "tenant-a", "user_id": "user-1"}
+  ],
+  "model": {"name": "stub-model", "prompt_digest": "sha256:prompt-demo"},
+  "judge_responses": {},
+  "errors": []
+}

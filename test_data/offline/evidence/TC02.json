@@ -1,0 +1,33 @@
+{
+  "contract": "weekly_report_quality.evidence.v1",
+  "case_id": "TC02",
+  "generated_at": "2026-08-20T01:00:00+00:00",
+  "output": {
+    "text": "本周数据看板 MVP 完成并通过联调；风险：埋点口径待确认，建议与数据团队对齐。",
+    "json": null
+  },
+  "route": {"name": "weekly_report.recipient_summary", "confidence": 0.9},
+  "faq_candidates": null,
+  "skill": null,
+  "mcp_calls": [],
+  "memory_events": [],
+  "model": {"name": "stub-model", "prompt_digest": "sha256:prompt-demo"},
+  "judge_responses": {
+    "cross_period": {
+      "pass": true,
+      "score": 0.92,
+      "reasons": [],
+      "model": "stub-judge-a",
+      "prompt_digest": "sha256:judge-a"
+    },
+    "cross_period_second": {
+      "pass": true,
+      "score": 0.9,
+      "reasons": [],
+      "model": "stub-judge-b",
+      "prompt_digest": "sha256:judge-b"
+    },
+    "critic": {"supported": true, "reasons": []}
+  },
+  "errors": []
+}

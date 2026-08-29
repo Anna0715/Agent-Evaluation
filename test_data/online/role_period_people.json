@@ -1,0 +1,423 @@
+{
+  "receiver": "ouvfhdgghjp37n",
+  "people": {
+    "智本_Anna6(测试勿动)": {
+      "user_id": "ouvfhdf8rkikoz",
+      "department": "质量保障组、自动化三级部门",
+      "dept_source": "friend/card",
+      "role": "质量工程师",
+      "short": "Anna6",
+      "sheet": "智本_Anna6",
+      "canary": "QA-ANNA6-CANARY-2026",
+      "qa_dept": "是",
+      "card": {
+        "businessCode": 0,
+        "businessMsg": "success",
+        "code": 0,
+        "data": {
+          "cardInfo": {
+            "fields": [
+              {
+                "fieldId": "B_DEPARTMENT",
+                "fieldName": "部门",
+                "fieldType": "object",
+                "fieldValue": "[{\"id\":\"ouvfgsdyqruaa8\",\"name\":\"质量保障组\",\"orgName\":\"质量保障组\",\"role\":2},{\"id\":\"ouvg07xnkxd8hj\",\"name\":\"自动化三级部门\",\"orgName\":\"自动化三级部门\",\"role\":1}]"
+              },
+              {
+                "fieldId": "B_JOB_TITLE",
+                "fieldName": "职务",
+                "fieldType": "enum",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_LEADER",
+                "fieldName": "直属上级",
+                "fieldType": "object",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_PHONE",
+                "fieldName": "手机号码",
+                "fieldType": "string",
+                "fieldValue": "+86 166****5678"
+              },
+              {
+                "fieldId": "B_EMAIL",
+                "fieldName": "邮箱",
+                "fieldType": "string",
+                "fieldValue": "a***6@test.com"
+              },
+              {
+                "fieldId": "B_ANOTHER_NAME",
+                "fieldName": "蜂巢系统中显示的名称",
+                "fieldType": "string",
+                "fieldValue": "智本_Anna6(测试勿动)"
+              },
+              {
+                "fieldId": "B_AVATAR",
+                "fieldName": "头像",
+                "fieldType": "string",
+                "fieldValue": "https://test-saas-api.oa-test.org/api/oa/v1/file/fl09TqR8RUxXUg3i0VJUre0oooqvj"
+              },
+              {
+                "fieldId": "B_EMPLOYEE_STATUS",
+                "fieldName": "员工账户状态",
+                "fieldType": "enum",
+                "fieldValue": "3"
+              }
+            ],
+            "userId": "ouvfhdf8rkikoz"
+          },
+          "remarkInfo": {
+            "createdTime": "",
+            "description": "",
+            "imageUrl": "",
+            "remarkContent": "智本_Anna6",
+            "targetUserId": "ouvfhdf8rkikoz",
+            "updatedTime": ""
+          }
+        },
+        "message": "success"
+      },
+      "departments": [
+        "质量保障组",
+        "自动化三级部门"
+      ]
+    },
+    "智本_Anna8": {
+      "user_id": "ouvfhdfcsrtotw",
+      "department": "质量保障组、自动化三级部门",
+      "dept_source": "friend/card",
+      "role": "质量工程师",
+      "short": "Anna8",
+      "sheet": "智本_Anna8",
+      "canary": "QA-ANNA8-CANARY-2026",
+      "qa_dept": "是",
+      "card": {
+        "businessCode": 0,
+        "businessMsg": "success",
+        "code": 0,
+        "data": {
+          "cardInfo": {
+            "fields": [
+              {
+                "fieldId": "B_DEPARTMENT",
+                "fieldName": "部门",
+                "fieldType": "object",
+                "fieldValue": "[{\"id\":\"ouvfgsdyqruaa8\",\"name\":\"质量保障组\",\"orgName\":\"质量保障组\",\"role\":2},{\"id\":\"ouvg07xnkxd8hj\",\"name\":\"自动化三级部门\",\"orgName\":\"自动化三级部门\",\"role\":2}]"
+              },
+              {
+                "fieldId": "B_JOB_TITLE",
+                "fieldName": "职务",
+                "fieldType": "enum",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_LEADER",
+                "fieldName": "直属上级",
+                "fieldType": "object",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_PHONE",
+                "fieldName": "手机号码",
+                "fieldType": "string",
+                "fieldValue": "+86 166****7628"
+              },
+              {
+                "fieldId": "B_EMAIL",
+                "fieldName": "邮箱",
+                "fieldType": "string",
+                "fieldValue": "a***8@test.com"
+              },
+              {
+                "fieldId": "B_ANOTHER_NAME",
+                "fieldName": "蜂巢系统中显示的名称",
+                "fieldType": "string",
+                "fieldValue": "智本_Anna8(测试勿动)"
+              },
+              {
+                "fieldId": "B_AVATAR",
+                "fieldName": "头像",
+                "fieldType": "string",
+                "fieldValue": "https://test-saas-api.oa-test.org/api/oa/v1/file/fl09TqR8RUxXUg3i0VJxgmmCkqp9q"
+              },
+              {
+                "fieldId": "B_EMPLOYEE_STATUS",
+                "fieldName": "员工账户状态",
+                "fieldType": "enum",
+                "fieldValue": "3"
+              }
+            ],
+            "userId": "ouvfhdfcsrtotw"
+          },
+          "remarkInfo": {
+            "createdTime": "",
+            "description": "",
+            "imageUrl": "",
+            "remarkContent": "",
+            "targetUserId": "ouvfhdfcsrtotw",
+            "updatedTime": ""
+          }
+        },
+        "message": "success"
+      },
+      "departments": [
+        "质量保障组",
+        "自动化三级部门"
+      ]
+    },
+    "智本_Anna": {
+      "user_id": "ouvfhdf8sidmrl",
+      "department": "质量保障组、技术部、自动化测试部门（勿动）、设计组、不能雨纯、test-dhh-main",
+      "dept_source": "friend/card",
+      "role": "财务",
+      "short": "Anna",
+      "sheet": "智本_Anna",
+      "canary": "FIN-ANNA-CANARY-2026",
+      "qa_dept": "是",
+      "card": {
+        "businessCode": 0,
+        "businessMsg": "success",
+        "code": 0,
+        "data": {
+          "cardInfo": {
+            "fields": [
+              {
+                "fieldId": "B_DEPARTMENT",
+                "fieldName": "部门",
+                "fieldType": "object",
+                "fieldValue": "[{\"id\":\"ouvfgsdyqruaa8\",\"name\":\"质量保障组\",\"orgName\":\"质量保障组\",\"role\":2},{\"id\":\"ouvfgsj3qkchzg\",\"name\":\"技术部\",\"orgName\":\"技术部\",\"role\":2},{\"id\":\"ouvg01vdb697rh\",\"name\":\"自动化测试部门（勿动）\",\"orgName\":\"自动化测试部门（勿动）\",\"role\":1},{\"id\":\"ouvfgsd0vyipru\",\"name\":\"设计组\",\"orgName\":\"设计组\",\"role\":2},{\"id\":\"ouvgioppxidn0s\",\"name\":\"不能雨纯\",\"orgName\":\"不能雨纯\",\"role\":2},{\"id\":\"ouvgc7phcfi7zd\",\"name\":\"test-dhh-main\",\"orgName\":\"test-dhh-main\",\"role\":2}]"
+              },
+              {
+                "fieldId": "B_JOB_TITLE",
+                "fieldName": "职务",
+                "fieldType": "enum",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_LEADER",
+                "fieldName": "直属上级",
+                "fieldType": "object",
+                "fieldValue": "{\"UserID\":\"ouvfgpinh8ue9l\",\"Name\":\"Bud\",\"Avatar\":\"https://test-saas-api.oa-test.org/api/oa/v1/file/fl09TqR8RUxXUg3i0VFgpIpxoqfvo\"}"
+              },
+              {
+                "fieldId": "B_PHONE",
+                "fieldName": "手机号码",
+                "fieldType": "string",
+                "fieldValue": "+86 138****1148"
+              },
+              {
+                "fieldId": "B_EMAIL",
+                "fieldName": "邮箱",
+                "fieldType": "string",
+                "fieldValue": "a***a@test.com"
+              },
+              {
+                "fieldId": "B_ANOTHER_NAME",
+                "fieldName": "蜂巢系统中显示的名称",
+                "fieldType": "string",
+                "fieldValue": "智本_Anna(测试勿动)"
+              },
+              {
+                "fieldId": "B_AVATAR",
+                "fieldName": "头像",
+                "fieldType": "string",
+                "fieldValue": "https://test-saas-api.oa-test.org/api/oa/v1/file/fl09TqR8RUxXUg3i0VJy4LLTyrs3x"
+              },
+              {
+                "fieldId": "B_EMPLOYEE_STATUS",
+                "fieldName": "员工账户状态",
+                "fieldType": "enum",
+                "fieldValue": "3"
+              }
+            ],
+            "userId": "ouvfhdf8sidmrl"
+          },
+          "remarkInfo": {
+            "createdTime": "",
+            "description": "",
+            "imageUrl": "",
+            "remarkContent": "",
+            "targetUserId": "ouvfhdf8sidmrl",
+            "updatedTime": ""
+          }
+        },
+        "message": "success"
+      },
+      "departments": [
+        "质量保障组",
+        "技术部",
+        "自动化测试部门（勿动）",
+        "设计组",
+        "不能雨纯",
+        "test-dhh-main"
+      ]
+    },
+    "智本_Anna12": {
+      "user_id": "ouvjnfxu6wpl2q",
+      "department": "设计一组、测试部门群1530",
+      "dept_source": "friend/card",
+      "role": "研发工程师",
+      "short": "Anna12",
+      "sheet": "智本_Anna12",
+      "canary": "RD-ANNA12-CANARY-2026",
+      "qa_dept": "否",
+      "card": {
+        "businessCode": 0,
+        "businessMsg": "success",
+        "code": 0,
+        "data": {
+          "cardInfo": {
+            "fields": [
+              {
+                "fieldId": "B_DEPARTMENT",
+                "fieldName": "部门",
+                "fieldType": "object",
+                "fieldValue": "[{\"id\":\"ouvgnxh3jamg3g\",\"name\":\"设计一组\",\"orgName\":\"设计一组\",\"role\":2},{\"id\":\"ouvfgkbnmt0rgu\",\"name\":\"\",\"orgName\":\"\",\"role\":2},{\"id\":\"ouvqyypxbkcgwd\",\"name\":\"测试部门群1530\",\"orgName\":\"测试部门群1530\",\"role\":2}]"
+              },
+              {
+                "fieldId": "B_JOB_TITLE",
+                "fieldName": "职务",
+                "fieldType": "enum",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_LEADER",
+                "fieldName": "直属上级",
+                "fieldType": "object",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_PHONE",
+                "fieldName": "手机号码",
+                "fieldType": "string",
+                "fieldValue": "+86 138****8001"
+              },
+              {
+                "fieldId": "B_EMAIL",
+                "fieldName": "邮箱",
+                "fieldType": "string",
+                "fieldValue": "a***2@test.com"
+              },
+              {
+                "fieldId": "B_ANOTHER_NAME",
+                "fieldName": "蜂巢系统中显示的名称",
+                "fieldType": "string",
+                "fieldValue": "智本_anna12"
+              },
+              {
+                "fieldId": "B_AVATAR",
+                "fieldName": "头像",
+                "fieldType": "string",
+                "fieldValue": "https://test-saas-api.oa-test.org/api/oa/v1/file/fl09TqR8RUxXUg3i0VTMqnf5lk6zl"
+              },
+              {
+                "fieldId": "B_EMPLOYEE_STATUS",
+                "fieldName": "员工账户状态",
+                "fieldType": "enum",
+                "fieldValue": "3"
+              }
+            ],
+            "userId": "ouvjnfxu6wpl2q"
+          },
+          "remarkInfo": {
+            "createdTime": "",
+            "description": "",
+            "imageUrl": "",
+            "remarkContent": "",
+            "targetUserId": "ouvjnfxu6wpl2q",
+            "updatedTime": ""
+          }
+        },
+        "message": "success"
+      },
+      "departments": [
+        "设计一组",
+        "测试部门群1530"
+      ]
+    },
+    "智本_Anna10": {
+      "user_id": "ouvgg2dyrtcvv7",
+      "department": "自动化三级部门",
+      "dept_source": "friend/card",
+      "role": "产品",
+      "short": "Anna10",
+      "sheet": "智本_Anna10",
+      "canary": "PM-ANNA10-CANARY-2026",
+      "qa_dept": "否",
+      "card": {
+        "businessCode": 0,
+        "businessMsg": "success",
+        "code": 0,
+        "data": {
+          "cardInfo": {
+            "fields": [
+              {
+                "fieldId": "B_DEPARTMENT",
+                "fieldName": "部门",
+                "fieldType": "object",
+                "fieldValue": "[{\"id\":\"ouvg07xnkxd8hj\",\"name\":\"自动化三级部门\",\"orgName\":\"自动化三级部门\",\"role\":2}]"
+              },
+              {
+                "fieldId": "B_JOB_TITLE",
+                "fieldName": "职务",
+                "fieldType": "enum",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_LEADER",
+                "fieldName": "直属上级",
+                "fieldType": "object",
+                "fieldValue": ""
+              },
+              {
+                "fieldId": "B_PHONE",
+                "fieldName": "手机号码",
+                "fieldType": "string",
+                "fieldValue": "+86 188****7829"
+              },
+              {
+                "fieldId": "B_EMAIL",
+                "fieldName": "邮箱",
+                "fieldType": "string",
+                "fieldValue": "a***0@test.com"
+              },
+              {
+                "fieldId": "B_ANOTHER_NAME",
+                "fieldName": "蜂巢系统中显示的名称",
+                "fieldType": "string",
+                "fieldValue": "智本_Anna10"
+              },
+              {
+                "fieldId": "B_AVATAR",
+                "fieldName": "头像",
+                "fieldType": "string",
+                "fieldValue": "https://test-saas-api.oa-test.org/api/oa/v1/file/fl09TqR8RUxXUg3i0VTMqX3sb7peu"
+              },
+              {
+                "fieldId": "B_EMPLOYEE_STATUS",
+                "fieldName": "员工账户状态",
+                "fieldType": "enum",
+                "fieldValue": "3"
+              }
+            ],
+            "userId": "ouvgg2dyrtcvv7"
+          },
+          "remarkInfo": {
+            "createdTime": "",
+            "description": "",
+            "imageUrl": "",
+            "remarkContent": "",
+            "targetUserId": "ouvgg2dyrtcvv7",
+            "updatedTime": ""
+          }
+        },
+        "message": "success"
+      },
+      "departments": [
+        "自动化三级部门"
+      ]
+    }
+  }
+}

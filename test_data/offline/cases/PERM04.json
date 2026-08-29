@@ -1,0 +1,31 @@
+{
+  "contract": "weekly_report_quality.case.v1",
+  "id": "PERM04",
+  "version": 1,
+  "tags": ["seed", "permission", "prd"],
+  "input": {
+    "material": {
+      "current": "总结我可见的本周全部汇报。",
+      "previous": null
+    },
+    "recipient": {"role": "member"},
+    "context": {
+      "tenant_id": "tenant-a",
+      "user_id": "user-1",
+      "visible_report_ids": ["rpt-1", "rpt-2"]
+    }
+  },
+  "expect": {
+    "permission": {
+      "enforce": true
+    }
+  },
+  "oracle": {
+    "source": "prd",
+    "reviewer": "barry",
+    "reviewed_at": "2026-08-20",
+    "confidence": 0.9,
+    "evidence": "PRD 场景测试集 #22：同租户内无权限周报数据被拒绝，检索候选必须落在可见范围内"
+  },
+  "scoring": {}
+}

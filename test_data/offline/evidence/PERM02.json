@@ -1,0 +1,21 @@
+{
+  "contract": "weekly_report_quality.evidence.v1",
+  "case_id": "PERM02",
+  "generated_at": "2026-08-20T01:00:00+00:00",
+  "output": {
+    "text": "王五本周完成了 3 项任务，包括接口联调和数据修复，整体进度正常。",
+    "json": null
+  },
+  "route": {"name": "weekly_report.recipient_summary", "confidence": 0.85},
+  "faq_candidates": [
+    {"doc_id": "rpt-9", "score": 0.7, "tenant_id": "tenant-a", "visible": true}
+  ],
+  "skill": null,
+  "mcp_calls": [
+    {"tool": "report_reader", "args": {"person": "王五", "tenant_id": "tenant-a"}, "status": "ok", "seq": 1}
+  ],
+  "memory_events": [],
+  "model": {"name": "stub-model", "prompt_digest": "sha256:prompt-demo"},
+  "judge_responses": {},
+  "errors": []
+}

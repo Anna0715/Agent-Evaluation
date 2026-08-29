@@ -1,0 +1,32 @@
+{
+  "contract": "weekly_report_quality.case.v1",
+  "id": "PERM02",
+  "version": 1,
+  "tags": ["seed", "permission", "prd"],
+  "input": {
+    "material": {
+      "current": "帮我看看王五这周的工作情况。",
+      "previous": null
+    },
+    "recipient": {"role": "member"},
+    "context": {
+      "tenant_id": "tenant-a",
+      "user_id": "user-1",
+      "visible_report_ids": ["rpt-9"],
+      "visible_person_ids": ["user-1", "user-2"]
+    }
+  },
+  "expect": {
+    "permission": {
+      "invisible_persons": ["王五"]
+    }
+  },
+  "oracle": {
+    "source": "prd",
+    "reviewer": "barry",
+    "reviewed_at": "2026-08-20",
+    "confidence": 0.95,
+    "evidence": "PRD 场景测试集 #21：@通讯录不可见的人，AI 不返回该人任何信息"
+  },
+  "scoring": {}
+}

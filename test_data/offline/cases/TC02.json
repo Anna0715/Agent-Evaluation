@@ -1,0 +1,29 @@
+{
+  "contract": "weekly_report_quality.case.v1",
+  "id": "TC02",
+  "version": 1,
+  "tags": ["seed", "no-previous"],
+  "input": {
+    "material": {
+      "current": "本周完成数据看板 MVP，联调通过；风险：埋点口径待确认。",
+      "previous": null
+    },
+    "recipient": {"role": "manager"},
+    "context": {"tenant_id": "tenant-a", "user_id": "user-1"}
+  },
+  "expect": {
+    "output": {
+      "must_contain": ["数据看板"],
+      "must_not_contain": ["相比上周", "较上期"]
+    },
+    "cross_period": {"no_previous": true}
+  },
+  "oracle": {
+    "source": "human",
+    "reviewer": "barry",
+    "reviewed_at": "2026-08-20",
+    "confidence": 0.9,
+    "evidence": "no-previous-period protection case"
+  },
+  "scoring": {}
+}

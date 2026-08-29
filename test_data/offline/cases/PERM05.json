@@ -1,0 +1,34 @@
+{
+  "contract": "weekly_report_quality.case.v1",
+  "id": "PERM05",
+  "version": 1,
+  "tags": ["seed", "permission", "prd", "memory"],
+  "input": {
+    "material": {
+      "current": "以后总结都用精简格式，并增加风险预测模块。",
+      "previous": null
+    },
+    "recipient": {"role": "member"},
+    "context": {
+      "tenant_id": "tenant-a",
+      "user_id": "user-1",
+      "visible_report_ids": ["rpt-1"]
+    }
+  },
+  "expect": {
+    "permission": {
+      "enforce": true
+    },
+    "output": {
+      "must_contain": ["已记住"]
+    }
+  },
+  "oracle": {
+    "source": "prd",
+    "reviewer": "barry",
+    "reviewed_at": "2026-08-20",
+    "confidence": 0.9,
+    "evidence": "PRD Story3：用户习惯基于租户ID+userID保存，记住后需告知用户"
+  },
+  "scoring": {}
+}

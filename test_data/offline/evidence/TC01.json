@@ -1,0 +1,47 @@
+{
+  "contract": "weekly_report_quality.evidence.v1",
+  "case_id": "TC01",
+  "generated_at": "2026-08-20T01:00:00+00:00",
+  "output": {
+    "text": "本周支付网关完成灰度发布，覆盖 30% 流量；主要风险为对账延迟尚未解决，建议下周优先跟进。",
+    "json": {
+      "summary": "支付网关灰度发布完成，覆盖 30% 流量",
+      "risks": ["对账延迟未解决"]
+    }
+  },
+  "route": {"name": "weekly_report.recipient_summary", "confidence": 0.93},
+  "faq_candidates": [
+    {"doc_id": "faq-101", "score": 0.87, "tenant_id": "tenant-a", "visible": true},
+    {"doc_id": "faq-102", "score": 0.55, "tenant_id": "tenant-a", "visible": true}
+  ],
+  "skill": {
+    "key": "weekly_report.summary",
+    "version": "1.4.0",
+    "channel": "stable",
+    "digest": "sha256:demo",
+    "tools": ["report_reader", "faq_search"]
+  },
+  "mcp_calls": [
+    {"tool": "report_reader", "args": {"report_id": "rpt-1", "tenant_id": "tenant-a"}, "status": "ok", "seq": 1}
+  ],
+  "memory_events": [],
+  "model": {"name": "stub-model", "prompt_digest": "sha256:prompt-demo"},
+  "judge_responses": {
+    "grounding": {
+      "pass": true,
+      "score": 0.9,
+      "reasons": [],
+      "model": "stub-judge-a",
+      "prompt_digest": "sha256:judge-a"
+    },
+    "grounding_second": {
+      "pass": true,
+      "score": 0.86,
+      "reasons": [],
+      "model": "stub-judge-b",
+      "prompt_digest": "sha256:judge-b"
+    },
+    "critic": {"supported": true, "reasons": []}
+  },
+  "errors": []
+}

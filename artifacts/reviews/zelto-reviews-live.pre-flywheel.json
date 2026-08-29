@@ -1,0 +1,682 @@
+{
+  "date": "2026-08-20",
+  "savedAt": "2026-08-20T15:29:37",
+  "reviewer": "",
+  "reviews": {
+    "WA-001": {
+      "result": "通过",
+      "redline": "否",
+      "score": 80.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:18:28.231Z"
+    },
+    "WA-002": {
+      "result": "通过",
+      "redline": "否",
+      "score": 82.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 5,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:18:29.765Z"
+    },
+    "WA-003": {
+      "result": "通过",
+      "redline": "否",
+      "score": 77,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 0,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:16:53.192Z"
+    },
+    "WA-004": {
+      "result": "通过",
+      "redline": "否",
+      "score": 65.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 0,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:16:57.897Z"
+    },
+    "WA-005": {
+      "result": "通过",
+      "redline": "否",
+      "score": 82.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 4,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:17:01.112Z"
+    },
+    "WA-006": {
+      "result": "通过",
+      "redline": "否",
+      "score": 80.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:17:02.581Z"
+    },
+    "WA-007": {
+      "result": "通过",
+      "redline": "否",
+      "score": 79.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 3,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:17:44.788Z"
+    },
+    "WA-008": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75,
+      "rawDimensions": {
+        "忠实度": 4,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "增加数字、日期和实体的源材料蕴含检查；关键事实错误一票否决。",
+      "rootCause": "模型 / Prompt",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:18:14.455Z"
+    },
+    "WA-009": {
+      "result": "通过",
+      "redline": "否",
+      "score": 55.6,
+      "rawDimensions": {
+        "忠实度": 0,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:18:58.735Z"
+    },
+    "WA-010": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75.6,
+      "rawDimensions": {
+        "忠实度": 4,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 4,
+        "风险趋势": 3,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:19:16.742Z"
+    },
+    "WA-011": {
+      "result": "通过",
+      "redline": "否",
+      "score": 79,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 0,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 4,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:19:44.296Z"
+    },
+    "WA-012": {
+      "result": "通过",
+      "redline": "否",
+      "score": 82.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 4,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:19:48.202Z"
+    },
+    "WA-013": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75.6,
+      "rawDimensions": {
+        "忠实度": 4,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "固定时间窗与来源集合，逐周抽取后再聚合并保留引用。",
+      "rootCause": "路由 / 检索",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:20:40.625Z"
+    },
+    "WA-014": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 0,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 3,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:11.351Z"
+    },
+    "WA-015": {
+      "result": "通过",
+      "redline": "否",
+      "score": 80.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:16.866Z"
+    },
+    "WA-016": {
+      "result": "通过",
+      "redline": "否",
+      "score": 84.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 4,
+        "风险趋势": 5,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:18.339Z"
+    },
+    "WA-017": {
+      "result": "通过",
+      "redline": "否",
+      "score": 82.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 4,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:24.338Z"
+    },
+    "WA-018": {
+      "result": "通过",
+      "redline": "否",
+      "score": 77,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 0,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:26.555Z"
+    },
+    "WA-019": {
+      "result": "通过",
+      "redline": "否",
+      "score": 80.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:27.986Z"
+    },
+    "WA-020": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75,
+      "rawDimensions": {
+        "忠实度": 4,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:29.582Z"
+    },
+    "WA-021": {
+      "result": "通过",
+      "redline": "否",
+      "score": 77.4,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 0,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 5
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:30.921Z"
+    },
+    "WA-022": {
+      "result": "通过",
+      "redline": "否",
+      "score": 82.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 5,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:21:34.063Z"
+    },
+    "WA-023": {
+      "result": "通过",
+      "redline": "否",
+      "score": 69.4,
+      "rawDimensions": {
+        "忠实度": 4,
+        "完整度": 0,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 3,
+        "指令理解": 4,
+        "可读性": 3,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:29:37.080Z"
+    },
+    "WA-044": {
+      "result": "通过",
+      "redline": "否",
+      "score": 82.6,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 5,
+        "指令理解": 4,
+        "可读性": 5,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:18:20.631Z"
+    },
+    "WA-045": {
+      "result": "通过",
+      "redline": "否",
+      "score": 80,
+      "rawDimensions": {
+        "忠实度": 5,
+        "完整度": 1,
+        "状态归因": 5,
+        "权限隐私": 5,
+        "历史关联": 3,
+        "风险趋势": 4,
+        "指令理解": 4,
+        "可读性": 4,
+        "稳定追溯": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "人工改判为通过",
+        "code": ""
+      },
+      "suggestion": "保持当前表现，纳入回归基线。",
+      "rootCause": "人工复核通过",
+      "reviewNote": "",
+      "reviewer": "",
+      "reviewedAt": "2026-08-20T06:18:22.097Z"
+    }
+  }
+}

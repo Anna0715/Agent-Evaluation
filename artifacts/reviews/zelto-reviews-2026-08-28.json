@@ -1,0 +1,117 @@
+{
+  "date": "2026-08-28",
+  "savedAt": "2026-08-28T19:52:52",
+  "reviewer": "自动复核",
+  "reviews": {
+    "WA-077": {
+      "result": "通过",
+      "redline": "否",
+      "score": 81.8,
+      "rawDimensions": {},
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "参考汇报数据上限10篇，未覆盖部分属产品限制改判通过",
+        "code": ""
+      },
+      "suggestion": "大批量汇总/检索场景先处理最近10篇并提示用户回复继续，符合产品上限。",
+      "rootCause": "产品限制",
+      "reviewNote": "产品参考汇报上限10篇，超出部分需分批继续；按上限改判通过",
+      "reviewer": "自动复核",
+      "reviewedAt": "2026-08-28T10:52:52.511945Z"
+    },
+    "WA-079": {
+      "result": "通过",
+      "redline": "否",
+      "score": 78.4,
+      "rawDimensions": {},
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "参考汇报数据上限10篇，未覆盖部分属产品限制改判通过",
+        "code": ""
+      },
+      "suggestion": "大批量汇总/检索场景先处理最近10篇并提示用户回复继续，符合产品上限。",
+      "rootCause": "产品限制",
+      "reviewNote": "产品参考汇报上限10篇，超出部分需分批继续；按上限改判通过",
+      "reviewer": "自动复核",
+      "reviewedAt": "2026-08-28T10:52:52.512761Z"
+    },
+    "WA-098": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75.0,
+      "rawDimensions": {
+        "完整度": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "参考汇报数据上限10篇，未覆盖部分属产品限制改判通过",
+        "code": ""
+      },
+      "suggestion": "大批量汇总/检索场景先处理最近10篇并提示用户回复继续，符合产品上限。",
+      "rootCause": "产品限制",
+      "reviewNote": "产品参考汇报上限10篇，超出部分需分批继续；按上限改判通过",
+      "reviewer": "自动复核",
+      "reviewedAt": "2026-08-28T10:52:52.512781Z"
+    },
+    "WA-102": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75.0,
+      "rawDimensions": {
+        "完整度": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "参考汇报数据上限10篇，未覆盖部分属产品限制改判通过",
+        "code": ""
+      },
+      "suggestion": "大批量汇总/检索场景先处理最近10篇并提示用户回复继续，符合产品上限。",
+      "rootCause": "产品限制",
+      "reviewNote": "产品参考汇报上限10篇，超出部分需分批继续；按上限改判通过",
+      "reviewer": "自动复核",
+      "reviewedAt": "2026-08-28T10:52:52.512788Z"
+    },
+    "WA-116": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75.0,
+      "rawDimensions": {
+        "完整度": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "参考汇报数据上限10篇，未覆盖部分属产品限制改判通过",
+        "code": ""
+      },
+      "suggestion": "大批量汇总/检索场景先处理最近10篇并提示用户回复继续，符合产品上限。",
+      "rootCause": "产品限制",
+      "reviewNote": "产品参考汇报上限10篇，超出部分需分批继续；按上限改判通过",
+      "reviewer": "自动复核",
+      "reviewedAt": "2026-08-28T10:52:52.512816Z"
+    },
+    "WA-119": {
+      "result": "通过",
+      "redline": "否",
+      "score": 75.0,
+      "rawDimensions": {
+        "完整度": 4
+      },
+      "issue": {
+        "type": "—",
+        "severity": "—",
+        "summary": "参考汇报数据上限10篇，未覆盖部分属产品限制改判通过",
+        "code": ""
+      },
+      "suggestion": "大批量汇总/检索场景先处理最近10篇并提示用户回复继续，符合产品上限。",
+      "rootCause": "产品限制",
+      "reviewNote": "产品参考汇报上限10篇，超出部分需分批继续；按上限改判通过",
+      "reviewer": "自动复核",
+      "reviewedAt": "2026-08-28T10:52:52.512822Z"
+    }
+  }
+}
