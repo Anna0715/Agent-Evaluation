@@ -109,10 +109,14 @@ class WebhookTextTests(unittest.TestCase):
         self.assertIn("负责人  @公台", text)
         self.assertNotIn("报告人：@安柔 @公台", text)
         self.assertIn("报告    https://example.test/report/", text)
-        from publish_quality_report import PAGES_REPORT_URL
+        from publish_quality_report import PAGES_REPORT_URL, pages_report_url
         self.assertEqual(
             PAGES_REPORT_URL,
-            "https://anna0715.github.io/Agent_report/zelto-agent-quality",
+            "https://anna0715.github.io/Agent_report/zelto-agent-quality/test",
+        )
+        self.assertEqual(
+            pages_report_url("pre"),
+            "https://anna0715.github.io/Agent_report/zelto-agent-quality/pre",
         )
 
     def test_fail_cases_split_by_suite(self) -> None:

@@ -62,6 +62,7 @@ jobs:
           ARGS=(
             --xlsx "$XLSX"
             --date "$DATE"
+            --environment test
             --pages-repo /tmp/Agent_report
             --batch-id "${{ github.event.inputs.batch_id }}"
           )

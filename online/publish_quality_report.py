@@ -2,16 +2,16 @@
 """解析「周报追问Agent全面评测用例.xlsx」执行记录，生成质检报告并发布到 GitHub Pages。
 
 产物（发布到 Anna0715/Agent_report 仓库）：
-  zelto-agent-quality/index.html             跳转到最新一次归档（避免入口页缓存旧数据）
-  zelto-agent-quality/latest.json            最新归档日期与 URL
-  zelto-agent-quality/runs/<date>/index.html 按日归档（真实报告）
-  zelto-agent-quality/runs/<date>.json       机器可读结果（供下次对比）
+  zelto-agent-quality/<env>/index.html             跳转到该环境最新归档
+  zelto-agent-quality/<env>/latest.json            该环境最新归档日期与 URL
+  zelto-agent-quality/<env>/runs/<date>/index.html 按环境、日期归档（真实报告）
+  zelto-agent-quality/<env>/runs/<date>.json       机器可读结果（供同环境下次对比）
 
 报告对齐历史质检页（可筛选明细、可点开案例、完整 9 节点 Trace），并支持在页面上手动改判、同步汇总、导出复核 JSON。
 
 用法：
   python publish_quality_report.py --date 2026-08-20 \\
-    --pages-repo /tmp/anna-pages [--reviews reviews.json] [--no-push]
+    --environment test --pages-repo /tmp/anna-pages [--reviews reviews.json] [--no-push]
   python publish_quality_report.py --apply-reviews zelto-reviews-2026-08-20.json
 """
 
@@ -61,7 +61,26 @@ DEFAULT_ASKER_NAME = "智本_anrou"
 ASKER_RE = re.compile(r"追问账号[=:：]\s*([^\s，。;；]+)")
 PAGES_SUBDIR = "zelto-agent-quality"
 PAGES_BASE_URL = "https://anna0715.github.io/Agent_report"
-PAGES_REPORT_URL = f"{PAGES_BASE_URL}/{PAGES_SUBDIR}"
+
+
+def normalize_report_environment(value: str = "") -> str:
+    """返回报告 URL 使用的显式环境标识。"""
+    environment = str(value or os.environ.get("REPORT_AGENT_ENV") or "test").strip().lower()
+    if environment not in {"test", "pre"}:
+        raise ValueError(f"不支持的报告环境：{environment}（仅支持 test/pre）")
+    return environment
+
+
+def pages_subdir(environment: str = "") -> str:
+    return f"{PAGES_SUBDIR}/{normalize_report_environment(environment)}"
+
+
+def pages_report_url(environment: str = "") -> str:
+    return f"{PAGES_BASE_URL}/{pages_subdir(environment)}"
+
+
+# 未显式指定时按 test 发布，保证后续 test 报告 URL 包含 /test/。
+PAGES_REPORT_URL = pages_report_url("test")
 WEBHOOK_DAILY_STATE_PATH = SCHEDULE_DIR / ".webhook_daily.json"
 SKIP_WEBHOOK_FLAG_PATH = SCHEDULE_DIR / ".no_webhook"
 WEBHOOK_TZ_NAME = "Asia/Tokyo"
@@ -1905,7 +1924,7 @@ def notify_delta_from_xlsx(
         args=args,
         summary=summary,
         records=records,
-        report_url=PAGES_REPORT_URL,
+        report_url=pages_report_url(),
     )
 
 
@@ -3221,11 +3240,11 @@ def summarize_summary_8dim(records: list[dict]) -> dict | None:
     }
 
 
-def write_latest_redirect(quality_dir: Path, date: str) -> None:
+def write_latest_redirect(quality_dir: Path, date: str, report_subdir: str) -> None:
     """最新入口只做跳转，避免 GitHub Pages 把整页旧报告缓存在目录 index 上。"""
     target = f"runs/{date}/"
     stamped = datetime.now().isoformat(timespec="seconds")
-    canonical = f"{PAGES_BASE_URL}/{PAGES_SUBDIR}/{target}"
+    canonical = f"{PAGES_BASE_URL}/{report_subdir}/{target}"
     (quality_dir / "index.html").write_text(
         f"""<!doctype html>
 <html lang="zh-CN">
@@ -3263,6 +3282,9 @@ def publish_to_pages(args: argparse.Namespace) -> dict:
     if not args.pages_repo:
         raise ValueError("发布报告时需要 --pages-repo")
 
+    environment = normalize_report_environment(getattr(args, "environment", ""))
+    report_subdir = pages_subdir(environment)
+    report_base_url = pages_report_url(environment)
     wb = load_workbook(args.xlsx, read_only=False, data_only=False)
     meta = load_cases_meta(wb)
     filled = ensure_asker_column(wb, args.record_sheet, meta)
@@ -3270,7 +3292,8 @@ def publish_to_pages(args: argparse.Namespace) -> dict:
         wb.save(args.xlsx)
         print(f"[ASKER] 回填追问人 {filled} 条")
     records = load_records(wb, args.record_sheet, meta)
-    n_src = enrich_fail_review_source_reports(records, xlsx_path=Path(args.xlsx))
+    # 旧的对照源数据来自 TEST CSV，PRE 报告禁止自动混入。
+    n_src = enrich_fail_review_source_reports(records, xlsx_path=Path(args.xlsx)) if environment == "test" else 0
     if n_src:
         print(f"[SOURCE] enriched {n_src} fail/review cases with expected weekly source")
     if args.reviews:
@@ -3285,7 +3308,7 @@ def publish_to_pages(args: argparse.Namespace) -> dict:
 
     summary = summarize(records, args.date)
     pages = Path(args.pages_repo)
-    quality_dir = pages / PAGES_SUBDIR
+    quality_dir = pages / report_subdir
     runs_dir = quality_dir / "runs"
     runs_dir.mkdir(parents=True, exist_ok=True)
 
@@ -3308,19 +3331,19 @@ def publish_to_pages(args: argparse.Namespace) -> dict:
         legacy = runs_dir / "legacy-latest.html"
         if not legacy.exists():
             shutil.copy2(latest, legacy)
-    write_latest_redirect(quality_dir, args.date)
+    write_latest_redirect(quality_dir, args.date, report_subdir)
     (pages / ".nojekyll").touch()
 
     if not args.no_push:
-        subprocess.run(["git", "-C", str(pages), "add", PAGES_SUBDIR, ".nojekyll"], check=True)
+        subprocess.run(["git", "-C", str(pages), "add", report_subdir, ".nojekyll"], check=True)
         subprocess.run(
-            ["git", "-C", str(pages), "commit", "-m", f"Publish Zelto agent quality report {args.date}"],
+            ["git", "-C", str(pages), "commit", "-m", f"Publish Zelto {environment} agent quality report {args.date}"],
             check=True,
         )
         subprocess.run(["git", "-C", str(pages), "push"], check=True)
 
-    report_url = f"{PAGES_BASE_URL}/{PAGES_SUBDIR}/runs/{args.date}/"
-    report_url_latest = f"{PAGES_BASE_URL}/{PAGES_SUBDIR}/"
+    report_url = f"{report_base_url}/runs/{args.date}/"
+    report_url_latest = f"{report_base_url}/"
     print(
         f"[SUMMARY] {json.dumps({k: summary[k] for k in ('date','total','verdicts','avg_weighted','redline_hits','trace_full','trace_partial')}, ensure_ascii=False)}"
     )
@@ -3330,12 +3353,13 @@ def publish_to_pages(args: argparse.Namespace) -> dict:
         args=args,
         summary=summary,
         records=records,
-        report_url=PAGES_REPORT_URL,
+        report_url=report_base_url,
     )
     return {
         "summary": summary,
         "report_url": report_url,
         "report_url_latest": report_url_latest,
+        "environment": environment,
         "records_count": len(records),
     }
 
@@ -3345,6 +3369,12 @@ def main() -> int:
     parser.add_argument("--xlsx", default=str(DEFAULT_XLSX))
     parser.add_argument("--record-sheet", default="执行记录")
     parser.add_argument("--date", default=datetime.now().strftime("%Y-%m-%d"))
+    parser.add_argument(
+        "--environment",
+        choices=("test", "pre"),
+        default=os.environ.get("REPORT_AGENT_ENV", "test").strip().lower(),
+        help="报告环境标识；决定 GitHub Pages 使用 /test/ 或 /pre/ 路径",
+    )
     parser.add_argument("--pages-repo", default="", help="Agent_report 本地克隆路径")
     parser.add_argument("--no-push", action="store_true")
     parser.add_argument("--reviews", default="", help="发布前合并的复核 JSON")
@@ -3383,7 +3413,7 @@ def main() -> int:
             args=args,
             summary={"date": args.date, "total": 0, "verdicts": {}, "pass_rate": None, "avg_weighted": None, "redline_hits": 0, "managed_avg": {}, "dimension_avg": {}},
             records=[],
-            report_url=PAGES_REPORT_URL,
+            report_url=pages_report_url(args.environment),
             error=args.error or "评测任务异常退出，未生成完整报告",
         )
         return 0
@@ -3408,7 +3438,7 @@ def main() -> int:
             args=args,
             summary=summary,
             records=records,
-            report_url=PAGES_REPORT_URL,
+            report_url=pages_report_url(args.environment),
         )
         return 0
 
