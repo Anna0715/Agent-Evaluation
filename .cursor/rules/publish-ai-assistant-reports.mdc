@@ -1,0 +1,10 @@
+---
+description: Publish generated AI assistant test reports to Git by default
+alwaysApply: true
+---
+
+After generating or updating an AI assistant test report, publish it to the configured `Anna0715/Agent_report` Git repository by default unless the user explicitly says not to publish.
+
+Keep the latest report at the stable, date-free URL `https://anna0715.github.io/Agent_report/ai-assistant/`. The dated run may also be retained under `ai-assistant/runs/<report-date>/` for history, but return the stable URL to the user by default.
+
+Preserve the previously agreed report structure unless the user explicitly requests a format change. Publish only report-safe artifacts; never include credentials, authorization tokens, passwords, verification codes, or other secrets. Report the push result and published URL when finished.
