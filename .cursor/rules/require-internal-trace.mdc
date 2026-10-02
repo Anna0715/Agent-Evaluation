@@ -1,0 +1,12 @@
+---
+description: Require authenticated internal Trace for every online AI assistant execution
+alwaysApply: true
+---
+
+Every online AI assistant case executed in `test` or `pre` must be enriched with authenticated business-agent Trace before the run is considered complete or its report is published. Local fixture-only cases are excluded.
+
+For every executed online case, require a non-empty `metadata.trace_runs` containing the internal Run ID and the available workflow, Skill, tool call/result, model, Prompt, event, usage, and status summaries. Public assistant SSE alone is insufficient.
+
+If Trace enrichment fails or remains missing, preserve the business answer for diagnosis but fail the execution/publish gate. Never interpret missing Trace as “the Agent called no tools”; label it as “internal Trace not captured”. Prefer read-only backfill from the recorded Session ID before rerunning the user question.
+
+Load Trace credentials from protected environment configuration and never persist passwords, flow tokens, bearer tokens, or raw secrets in evidence or reports.
