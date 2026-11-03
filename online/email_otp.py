@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import base64
 import email
 import email.utils
 import imaplib
@@ -30,6 +31,24 @@ DEFAULT_HIVE_IMAP_FOLDER = "蜂巢"
 DEFAULT_POLL_INTERVAL = 5.0
 DEFAULT_WAIT_PER_SEND = 60.0
 DEFAULT_MAX_RESENDS = 1  # 首轮 + 1 次重发 = 共 2 轮
+
+
+class MailboxConfigurationError(ValueError):
+    """Sanitized, non-retryable local mailbox configuration error."""
+
+
+def normalize_mailbox_password(mailbox_email: str, password: str) -> str:
+    """Normalize Gmail app passwords in memory; never alter workbook values."""
+    domain = (mailbox_email or "").rsplit("@", 1)[-1].strip().lower()
+    value = password or ""
+    if domain not in {"gmail.com", "googlemail.com"}:
+        return value
+    value = "".join(character for character in value if not character.isspace())
+    if len(value) != 16 or any(not ("a" <= c <= "z" or "A" <= c <= "Z") for c in value):
+        raise MailboxConfigurationError(
+            "GMAIL_APP_PASSWORD_CONFIG: Password2 must contain 16 ASCII letters"
+        ) from None
+    return value
 
 
 def otp_mailbox_email() -> str:
@@ -103,8 +122,33 @@ def _is_hive_sender(msg: email.message.Message) -> bool:
     return any(marker in blob for marker in HIVE_FROM_MARKERS)
 
 
+def _imap_folder_name(folder: str) -> str:
+    """Encode a mailbox name with IMAP modified UTF-7 before SELECT."""
+    parts: list[str] = []
+    encoded: list[str] = []
+
+    def flush() -> None:
+        if encoded:
+            data = "".join(encoded).encode("utf-16-be")
+            parts.append("&" + base64.b64encode(data).decode("ascii").rstrip("=").replace("/", ",") + "-")
+            encoded.clear()
+
+    for char in folder:
+        if char == "&":
+            flush()
+            parts.append("&-")
+        elif " " <= char <= "~":
+            flush()
+            parts.append(char)
+        else:
+            encoded.append(char)
+    flush()
+    return "".join(parts)
+
+
 def _select_imap_folder(mail: imaplib.IMAP4_SSL, folder: str) -> bool:
-    for name in (folder, f'"{folder}"'):
+    encoded = _imap_folder_name(folder)
+    for name in (encoded, f'"{encoded}"'):
         try:
             status, _ = mail.select(name)
             if status == "OK":
@@ -234,7 +278,7 @@ def try_fetch_latest_otp(
 ) -> str | None:
     """单次 IMAP 扫描，取发送时间之后、收件人匹配的最新蜂巢验证码。"""
     mailbox_email = (mailbox_email or "").strip()
-    mailbox_password = (mailbox_password or "").strip()
+    mailbox_password = normalize_mailbox_password(mailbox_email, mailbox_password)
     recipient_email = (recipient_email or "").strip()
     if not mailbox_email or not mailbox_password:
         raise ValueError("mailbox_email 与 mailbox_password 不能为空")
@@ -273,6 +317,7 @@ def fetch_otp_with_resend(
 
     resend_code 应触发 iHive 发验证码并返回新的 sent_after 时间戳。
     """
+    mailbox_password = normalize_mailbox_password(mailbox_email, mailbox_password)
     poll_interval = float(
         poll_interval if poll_interval is not None else os.environ.get("OTP_POLL_INTERVAL", DEFAULT_POLL_INTERVAL)
     )
@@ -408,16 +453,30 @@ def resolve_otp_mailbox_for_account(
     - 本号登录 a16621325482@gmail.com：全量扫 Important 等文件夹
     """
     recipient = (account.login_account or account.user_email or "").strip()
+    from env_config import get_profile
+
+    if get_profile().name == "pre" and account.user_name == "annaz":
+        mailbox, pwd = resolve_otp_mailbox_credentials(
+            xlsx_path=xlsx_path,
+            sheet_name=sheet_name,
+            target_mailbox="a16621325482@gmail.com",
+        )
+        return mailbox, pwd, recipient
     if is_outlook_login_email(recipient):
         mailbox, pwd = resolve_otp_mailbox_credentials(xlsx_path=xlsx_path, sheet_name=sheet_name)
         return mailbox, pwd, recipient
 
     mailbox = recipient
-    pwd = (account.password or "").strip()
+    # Gmail credentials must come from this selected account's Password2.
+    is_gmail = mailbox.lower().split("@")[-1] in {"gmail.com", "googlemail.com"}
+    pwd = (
+        getattr(account, "mailbox_password", "")
+        or ("" if is_gmail else account.password)
+        or ""
+    ).strip()
     if not pwd:
-        raise ValueError(
-            f"Gmail 账号 {account.user_name!r} ({mailbox}) 需在 pre_data 填写 Password（应用专用密码）"
-        )
+        raise MailboxConfigurationError("MAILBOX_CONFIG: missing mailbox password")
+    pwd = normalize_mailbox_password(mailbox, pwd)
     return mailbox, pwd, recipient
 
 
@@ -425,15 +484,21 @@ def resolve_otp_mailbox_credentials(
     *,
     xlsx_path: str | None = None,
     sheet_name: str = "pre_data",
+    target_mailbox: str | None = None,
 ) -> tuple[str, str]:
     """从 pre_data 读取 OTP 代收邮箱（默认 a16621325482@gmail.com）的凭据。"""
     from excel_tool import get_accounts, DATA_XLSX_PATH
 
-    target = otp_mailbox_email()
+    target = (otp_mailbox_email() if target_mailbox is None else target_mailbox).strip().lower()
     path = xlsx_path or DATA_XLSX_PATH
     for account in get_accounts(path, sheet_name=sheet_name):
         if account.user_email.lower() == target:
-            if not account.password:
-                raise ValueError(f"OTP 代收邮箱 {target} 缺少 Password（应用专用密码）")
-            return account.user_email, account.password
-    raise ValueError(f"pre_data 中未找到 OTP 代收邮箱 {target!r}")
+            mailbox_password = (
+                getattr(account, "mailbox_password", "")
+                or ("" if target.lower().split("@")[-1] in {"gmail.com", "googlemail.com"} else account.password)
+                or ""
+            ).strip()
+            if not mailbox_password:
+                raise MailboxConfigurationError("MAILBOX_CONFIG: missing mailbox password")
+            return account.user_email, normalize_mailbox_password(account.user_email, mailbox_password)
+    raise MailboxConfigurationError("MAILBOX_CONFIG: configured mailbox not found")

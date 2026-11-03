@@ -24,6 +24,7 @@ class Account:
     department_id: str = ""
     user_id: str = ""
     password: str = ""
+    mailbox_password: str = ""
 
     @property
     def login_account(self) -> str:
@@ -54,6 +55,7 @@ _ACCOUNT_FIELD_MAP: Dict[str, str] = {
     "UserID": "user_id",
     "Password": "password",
     "password": "password",
+    "Password2": "mailbox_password",
 }
 
 

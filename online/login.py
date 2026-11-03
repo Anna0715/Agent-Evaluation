@@ -1,8 +1,11 @@
+import base64
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import unittest
 import uuid
@@ -18,19 +21,25 @@ from email_otp import (
 )
 
 
-ORG_BASE_URL = saas_api_url("test")
+ORG_BASE_URL = saas_api_url()
 im_BASE_URL = "https://test-im-api.oa-test.org"
 
-# ====== 这部分 header / body 来自你贴的 curl（尽量保持一致）======
-CLIENT_VERSION = "1.0.162"
-DEVICE_ID = "91686C55-2F7F-4910-B8F5-810F566071C79"
-DEVICE_NAME = "Anna%E7%9A%84MacBook%20Pro%20(MacBook%20Pro)"
-DEVICE_OS = "iOS 26.5"
+# test / pre 共用同一套非用户态 header；token 等用户态字段按请求动态追加。
+CLIENT_VERSION = "1.0.400"
+DEVICE_ID_8CC8 = "8CC88A47-6FAE-5F8B-A3A5-4E4536614029"
+DEVICE_ID_819A = "819AE7ED-006A-5FB0-BAA5-7103B259498F"
+# 兼容外部脚本原有的 DEVICE_ID / COMMON_HEADERS 动态覆盖方式。
+DEVICE_ID = DEVICE_ID_8CC8
+DEVICE_ID_FALLBACK_BY_USER_NAME = {
+    "annaz": DEVICE_ID_819A,
+}
+DEVICE_NAME = "Anna's%20%20macbook%20(MacBook%20Pro)"
+DEVICE_OS = "macOS 26.5.1"
 TIMEZONE = "9"
 USER_AGENT = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "iHive/1.0.162 Chrome/146.0.7680.80 Electron/41.0.3 Safari/537.36"
+    "iHive/1.0.400 Chrome/142.0.7444.265 Electron/39.3.0 Safari/537.36"
 )
 
 COMMON_HEADERS = {
@@ -44,7 +53,7 @@ COMMON_HEADERS = {
     "timezone": TIMEZONE,
     "user-agent": USER_AGENT,
     "x-device-arch": "arm64",
-    "sec-ch-ua": '"Not-A.Brand";v="24", "Chromium";v="146"',
+    "sec-ch-ua": '"Not_A Brand";v="99", "Chromium";v="142"',
     "sec-ch-ua-mobile": "?0",
     "sec-ch-ua-platform": '"macOS"',
     "sec-fetch-dest": "empty",
@@ -55,27 +64,17 @@ COMMON_HEADERS = {
 }
 
 
-ORG_COMMON_HEADERS = {
-    "accept": "application/json, text/plain, */*",
-    "accept-language": "zh-CN",
-    "client-version": "1.0.15",
-    "content-type": "application/json",
-    "device-id": "0E9E2411-5573-57C0-A375-2C3F8D24F7B3",
-    "device-name": "Anna%E7%9A%84MacBook%20Air",
-    "device-os": "macOS 26.0.1",
-    "priority": "u=1, i",
-    "sec-ch-ua": '"Not=A?Brand";v="24", "Chromium";v="140"',
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": '"macOS"',
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "cross-site",
-    "timezone": "8",
-    "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
-    "AppleWebKit/537.36 (KHTML, like Gecko) "
-    "oa-saas-desktop/1.0.15 Chrome/140.0.7339.240 Electron/38.4.0 Safari/537.36",
-    "x-device-arch": "arm64",
-}
+# 兼容外部脚本原有引用；两者是同一个配置对象。
+ORG_COMMON_HEADERS = COMMON_HEADERS
+
+
+def device_id_for_user(user_name: str) -> str:
+    """默认共用 8CC8 device-id；已确认失败的账号回退到 819A。"""
+    normalized = (user_name or "").strip()
+    return DEVICE_ID_FALLBACK_BY_USER_NAME.get(
+        normalized,
+        str(COMMON_HEADERS.get("device-id") or DEVICE_ID),
+    )
 
 
 def _uuid() -> str:
@@ -197,6 +196,73 @@ def _api_ok(resp_json: Dict[str, Any]) -> Tuple[bool, str]:
         return True, ""
 
     return False, "empty response"
+
+
+def _resp_summary(resp: Optional[Dict[str, Any]]) -> str:
+    """仅输出状态字段，避免把密码、密文或 token 写入日志。"""
+    if not resp:
+        return "None"
+    if not isinstance(resp, dict):
+        return type(resp).__name__
+    parts: List[str] = []
+    for key in ("code", "businessCode", "success"):
+        if key in resp:
+            parts.append(f"{key}={resp.get(key)}")
+    message = resp.get("message") or resp.get("msg") or resp.get("businessMsg")
+    if message:
+        parts.append(f"message={message}")
+    return " ".join(parts) if parts else f"keys={list(resp.keys())}"
+
+
+def _extract_password_public_key(resp: Dict[str, Any]) -> str:
+    """兼容 data.public_key / publicKey 等返回结构。"""
+    stack: List[Any] = [resp]
+    while stack:
+        current = stack.pop()
+        if isinstance(current, dict):
+            for key, value in current.items():
+                if key in {"public_key", "publicKey", "key"} and isinstance(value, str):
+                    value = value.strip()
+                    if "BEGIN PUBLIC KEY" in value or "BEGIN RSA PUBLIC KEY" in value:
+                        return value
+                if isinstance(value, (dict, list)):
+                    stack.append(value)
+        elif isinstance(current, list):
+            stack.extend(value for value in current if isinstance(value, (dict, list)))
+    raise ValueError("public key response 中未找到 PEM 公钥")
+
+
+def _encrypt_password_pkcs1_v1_5(password: str, public_key: str) -> str:
+    """使用 OpenSSL 按 RSAES-PKCS1-v1_5 加密密码，并返回 Base64。"""
+    password_bytes = password.encode("utf-8")
+    if not password_bytes:
+        raise ValueError("Password 不能为空")
+    openssl = shutil.which("openssl")
+    if not openssl:
+        raise RuntimeError("未找到 openssl，无法执行 RSA PKCS#1 v1.5 密码加密")
+
+    with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", suffix=".pem") as key_file:
+        key_file.write(public_key)
+        key_file.flush()
+        proc = subprocess.run(
+            [
+                openssl,
+                "pkeyutl",
+                "-encrypt",
+                "-pubin",
+                "-inkey",
+                key_file.name,
+                "-pkeyopt",
+                "rsa_padding_mode:pkcs1",
+            ],
+            input=password_bytes,
+            capture_output=True,
+            timeout=10,
+        )
+    if proc.returncode != 0 or not proc.stdout:
+        stderr = proc.stderr.decode("utf-8", errors="replace").strip()
+        raise RuntimeError(f"RSA PKCS#1 v1.5 加密失败: {stderr}")
+    return base64.b64encode(proc.stdout).decode("ascii")
 
 
 def _post_json_curl(
@@ -333,14 +399,24 @@ def _extract_org_tokens_and_userid(
     return token_api_access, token_im_access, user_id
 
 
-def org_login(access_token: str, tenant_id: str, company_id: str, platform: int = 1) -> Dict[str, Any]:
+def org_login(
+    access_token: str,
+    tenant_id: str,
+    company_id: str,
+    platform: int = 1,
+    *,
+    base_url: str | None = None,
+    device_id: str | None = None,
+) -> Dict[str, Any]:
     """
     对应你提供的 curl：POST /api/oa/v1/idp/org/login
     """
-    url = f"{ORG_BASE_URL}/api/oa/v1/idp/org/login"
+    url = f"{(base_url or ORG_BASE_URL).rstrip('/')}/api/oa/v1/idp/org/login"
     operationid = _uuid()
-    headers = dict(ORG_COMMON_HEADERS)
+    headers = dict(COMMON_HEADERS)
+    headers["device-id"] = device_id or str(COMMON_HEADERS.get("device-id") or DEVICE_ID)
     headers["authorization"] = f"Bearer {access_token}"
+    headers["operationid"] = operationid
     headers["x-request-id"] = operationid
 
     payload = {
@@ -356,11 +432,19 @@ def org_login(access_token: str, tenant_id: str, company_id: str, platform: int 
 
 
 class SaasApiClient:
-    def __init__(self, base_url: str):
+    def __init__(self, base_url: str, *, device_id: str | None = None):
         self.base_url = base_url
+        self.device_id = device_id or str(COMMON_HEADERS.get("device-id") or DEVICE_ID)
 
-    def _build_headers(self, operationid: str, x_request_id: str) -> Dict[str, str]:
+    def _build_headers(
+        self,
+        operationid: str | None = None,
+        x_request_id: str | None = None,
+    ) -> Dict[str, str]:
+        operationid = operationid or _uuid()
+        x_request_id = x_request_id or operationid
         h = dict(COMMON_HEADERS)
+        h["device-id"] = self.device_id
         h["operationid"] = operationid
         h["x-request-id"] = x_request_id
         return h
@@ -435,6 +519,52 @@ class SaasApiClient:
         _, resp_json, _ = self._post_json("/api/oa/v1/idp/user/login", payload, headers=headers)
         return resp_json
 
+    def password_login_precheck(
+        self,
+        login_account: str,
+        *,
+        platform: int = 4,
+    ) -> Dict[str, Any]:
+        payload = {"loginAccount": login_account, "platform": platform}
+        _, resp_json, _ = self._post_json(
+            "/api/oa/v1/idp/user/login/precheck",
+            payload,
+            headers=self._build_headers(),
+        )
+        return resp_json
+
+    def get_password_public_key(self) -> Dict[str, Any]:
+        _, resp_json, _ = self._post_json(
+            "/api/oa/v1/idp/password/public/key",
+            {},
+            headers=self._build_headers(),
+        )
+        return resp_json
+
+    def login_by_password(
+        self,
+        login_account: str,
+        *,
+        encrypted_password: str,
+        platform: int = 4,
+        keep_login: int = 1,
+        is_reset_password: int = 0,
+    ) -> Dict[str, Any]:
+        payload = {
+            "type": 3,
+            "login_account": login_account,
+            "platform": platform,
+            "password": encrypted_password,
+            "keep_login": keep_login,
+            "is_reset_password": is_reset_password,
+        }
+        _, resp_json, _ = self._post_json(
+            "/api/oa/v1/idp/user/login",
+            payload,
+            headers=self._build_headers(),
+        )
+        return resp_json
+
     def get_joined_company_list(
         self,
         *,
@@ -461,11 +591,11 @@ def _send_code_too_frequent(resp: Dict[str, Any]) -> bool:
         str(resp.get("code") or ""),
         str(resp.get("businessCode") or ""),
     }
-    if "3012003" in codes:
+    if codes.intersection({"3012002", "3012003"}):
         return True
     for key in ("message", "msg", "businessMsg"):
         text = str(resp.get(key) or "")
-        if "过于频繁" in text or "请稍后" in text:
+        if "过于频繁" in text or "请稍后" in text or "后重试" in text:
             return True
     return False
 
@@ -620,6 +750,14 @@ def login_flow_for_account(
 
     send_started_at: float | None = None
     send_resp: Optional[Dict[str, Any]] = None
+    # Configuration-only preflight: no IMAP access and no SaaS code request.
+    # Explicit codes and the test profile do not depend on mailbox setup.
+    if (
+        get_profile().name == "pre"
+        and not (otp_code or "").strip()
+        and not os.environ.get("OTP_CODE", "").strip()
+    ):
+        resolve_otp_mailbox_for_account(account)
     if run_send_code:
         _log("发送验证码")
         send_resp, send_started_at = _send_verification_code(
@@ -642,12 +780,15 @@ def login_flow_for_account(
             sent_after=send_started_at,
         )
     if not code:
-        code = _resolve_otp_code(account, after_send=False) or "123456"
+        if get_profile().name == "pre":
+            raise RuntimeError("OTP_AUTH: resolve: unavailable")
+        code = "123456"
 
     login_resp = client.login_by_code(
         account.login_account,
         phone_area_code=phone_area_code,
         code=code,
+        platform=4 if get_profile().name == "pre" else 1,
     )
     ok, msg = _api_ok(login_resp)
     assert ok, f"login failed: {msg}. resp={login_resp}"
@@ -667,6 +808,78 @@ def login_flow_for_account(
     assert ok, f"get_joined_company_list failed: {msg}. resp={joined_resp}"
     _log(f"获取租户列表成功; 租户响应: {_resp_summary(joined_resp)}")
     return {"send_code_resp": send_resp, "login_resp": login_resp, "joined_resp": joined_resp}
+
+
+class PasswordAuthenticationError(RuntimeError):
+    """Explicit password-auth rejection before obtaining an access token."""
+
+    def __init__(self, stage: str):
+        super().__init__(f"PASSWORD_AUTH: {stage}")
+
+
+def password_login_flow_for_account(
+    client: SaasApiClient,
+    *,
+    account: Account,
+) -> Dict[str, Any]:
+    """pre 密码登录：预检、公钥获取、PKCS#1 v1.5 加密、登录、租户列表。"""
+    if not account.password:
+        raise PasswordAuthenticationError("missing_password")
+
+    print(f"[LOGIN] {account.user_name} 使用密码登录，账号={account.login_account}")
+    precheck_resp = client.password_login_precheck(account.login_account)
+    ok, msg = _api_ok(precheck_resp)
+    if not ok:
+        raise AssertionError(f"password precheck failed: {msg}; {_resp_summary(precheck_resp)}")
+    next_method = _extract_first_str_field(
+        precheck_resp.get("data"),
+        ["nextLoginMethod", "next_login_method"],
+    )
+    print("[LOGIN] 密码登录预检完成")
+    if next_method and next_method != "LOGIN_METHOD_PASSWORD":
+        if next_method == "LOGIN_METHOD_EMAIL_CODE":
+            raise PasswordAuthenticationError("email_code_required")
+        raise RuntimeError("PASSWORD_AUTH: unsupported_login_method")
+
+    public_key_resp = client.get_password_public_key()
+    ok, msg = _api_ok(public_key_resp)
+    if not ok:
+        raise AssertionError(
+            f"get password public key failed: {msg}; {_resp_summary(public_key_resp)}"
+        )
+    public_key = _extract_password_public_key(public_key_resp)
+    encrypted_password = _encrypt_password_pkcs1_v1_5(account.password, public_key)
+
+    login_resp = client.login_by_password(
+        account.login_account,
+        encrypted_password=encrypted_password,
+    )
+    ok, msg = _api_ok(login_resp)
+    if not ok:
+        raise PasswordAuthenticationError("password_rejected")
+
+    access_token = _extract_access_token_from_login_resp(login_resp)
+    if not access_token:
+        raise ValueError("password login response 中未找到 access_token")
+    print("[LOGIN] 密码认证成功")
+    joined_resp = client.get_joined_company_list(
+        bearer_token=access_token,
+        token_header=access_token,
+        page=1,
+        page_size=50,
+    )
+    ok, msg = _api_ok(joined_resp)
+    if not ok:
+        raise AssertionError(
+            f"get_joined_company_list failed: {msg}; {_resp_summary(joined_resp)}"
+        )
+    print(f"[LOGIN] 获取租户列表成功; {_resp_summary(joined_resp)}")
+    return {
+        "send_code_resp": None,
+        "precheck_resp": precheck_resp,
+        "login_resp": login_resp,
+        "joined_resp": joined_resp,
+    }
 
 
 def _extract_company_from_joined_resp(joined_resp: Dict[str, Any], company_name: str) -> Optional[Dict[str, Any]]:
@@ -757,12 +970,14 @@ def switch_company(
     company_name: str,
     joined_resp: Optional[Dict[str, Any]] = None,
     platform: int = 1,
+    device_id: str | None = None,
 ) -> Dict[str, Any]:
     """同一登录态下切租户：复用 idp access_token，再调 org/login。"""
     if not access_token:
         raise ValueError("switch_company 需要登录阶段的 access_token")
+    resolved_device_id = device_id or str(COMMON_HEADERS.get("device-id") or DEVICE_ID)
     if joined_resp is None:
-        client = SaasApiClient(ORG_BASE_URL)
+        client = SaasApiClient(ORG_BASE_URL, device_id=resolved_device_id)
         joined_resp = client.get_joined_company_list(
             bearer_token=access_token,
             token_header=access_token,
@@ -798,6 +1013,7 @@ def switch_company(
         tenant_id=tenant_id,
         company_id=company_id,
         platform=platform,
+        device_id=resolved_device_id,
     )
     token_api_access_token, token_im_access_token, org_userid = _extract_org_tokens_and_userid(
         org_login_resp
@@ -817,6 +1033,79 @@ def switch_company(
         "company_name": company_name,
         "access_token": access_token,
         "joined_resp": joined_resp,
+        "device_id": resolved_device_id,
+    }
+
+
+def pwd_login(company_name: str, user_name: str) -> Dict[str, Any]:
+    """使用 pre_data 的 Password 完成 pre 环境密码登录和公司登录。"""
+    account = get_account_from_data_csv(
+        DATA_XLSX_PATH,
+        user_name=user_name,
+        company_name=company_name,
+    )
+    if company_name and account.company_name and account.company_name != company_name:
+        raise ValueError(
+            f"account.company_name mismatch: account={account.company_name}, expected={company_name}"
+        )
+
+    client = SaasApiClient(
+        ORG_BASE_URL,
+        device_id=device_id_for_user(account.user_name),
+    )
+    resp = password_login_flow_for_account(client, account=account)
+    matched_company = _extract_company_from_joined_resp(resp["joined_resp"], company_name)
+    if matched_company is None:
+        available = _joined_company_names(resp["joined_resp"])
+        raise ValueError(
+            f"cannot find company_name={company_name} in joined list; available={available}"
+        )
+
+    tenant_id = _extract_first_str_field(
+        matched_company,
+        ["tenant_id", "TenantId", "tenantId"],
+    )
+    company_id = _extract_first_str_field(
+        matched_company,
+        ["company_id", "CompanyId", "companyId", "CompanyID", "companyID"],
+    )
+    if not tenant_id or not company_id:
+        raise ValueError(
+            f"matched_company missing tenant_id/company_id; tenant_id={tenant_id}, "
+            f"company_id={company_id}, keys={list(matched_company.keys())}"
+        )
+
+    access_token = _extract_access_token_from_login_resp(resp["login_resp"])
+    if not access_token:
+        raise ValueError("password login response 中未找到 access_token")
+    # pre 的密码登录来自桌面客户端，服务端要求使用平台 4。
+    # 平台 1 会在 org/login 阶段返回 2001023「登录平台不一致」。
+    org_login_resp = org_login(
+        access_token=access_token,
+        tenant_id=tenant_id,
+        company_id=company_id,
+        platform=4,
+        base_url=client.base_url,
+        device_id=client.device_id,
+    )
+    token_api_access_token, token_im_access_token, org_userid = _extract_org_tokens_and_userid(
+        org_login_resp
+    )
+    print(
+        f"[LOGIN] {account.user_name}+{company_name}密码登录成功; "
+        f"tenant_id={tenant_id} company_id={company_id} user_id={org_userid}"
+    )
+    return {
+        **resp,
+        "api_token": token_api_access_token,
+        "im_token": token_im_access_token,
+        "tenant_id": tenant_id,
+        "company_id": company_id,
+        "user_id": org_userid,
+        "access_token": access_token,
+        "company_name": company_name,
+        "user_name": account.user_name,
+        "device_id": client.device_id,
     }
 
 
@@ -840,16 +1129,31 @@ def login(company_name: str, user_name: str) -> Dict[str, Any]:
     - userid：从 org_login_resp 中提取（无则为 None）
     """
 
-    phone_area_code = os.environ.get("PHONE_AREA_CODE", "+81")
+    profile = get_profile()
+    if profile.name == "pre":
+        try:
+            return pwd_login(company_name=company_name, user_name=user_name)
+        except PasswordAuthenticationError:
+            print("[LOGIN] 密码认证未完成，改用一次邮箱验证码登录")
+
     run_send_code = os.environ.get("RUN_SEND_CODE", "1") == "1"
 
     account = get_account_from_data_csv(DATA_XLSX_PATH, user_name=user_name, company_name=company_name)
+    configured_area_code = os.environ.get("PHONE_AREA_CODE")
+    phone_area_code = (
+        configured_area_code
+        if configured_area_code is not None
+        else ("" if "@" in account.login_account else "+81")
+    )
     if company_name and account.company_name and account.company_name != company_name:
         raise ValueError(
             f"account.company_name mismatch: account={account.company_name}, expected={company_name}"
         )
 
-    client = SaasApiClient(ORG_BASE_URL)
+    client = SaasApiClient(
+        ORG_BASE_URL,
+        device_id=device_id_for_user(account.user_name),
+    )
     resp = login_flow_for_account(
         client,
         account=account,
@@ -887,7 +1191,9 @@ def login(company_name: str, user_name: str) -> Dict[str, Any]:
         access_token=access_token,
         tenant_id=tenant_id,
         company_id=company_id,
-        platform=1,
+        platform=4 if profile.name == "pre" else 1,
+        base_url=client.base_url,
+        device_id=client.device_id,
     )
     org_code = org_login_resp.get("code")
     org_message = org_login_resp.get("message") or org_login_resp.get("msg")
@@ -915,6 +1221,7 @@ def login(company_name: str, user_name: str) -> Dict[str, Any]:
         "access_token": access_token,
         "company_name": company_name,
         "user_name": account.user_name,
+        "device_id": client.device_id,
     }
 
 
