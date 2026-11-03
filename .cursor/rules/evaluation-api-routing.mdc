@@ -1,0 +1,10 @@
+---
+description: Run project work locally; reserve the configured API for the evaluation judge
+alwaysApply: true
+---
+
+For all project work, Codex may make substantive decisions and execute authorized local work directly in this chat. Do not call `online/work_api.py` for general analysis, planning, implementation, reports, or Git operations. Do not ask the user to repeat this persistent preference.
+
+The shared evaluation judge may use the existing protected `JUDGE_API_KEY` and locked streaming `gpt-6.1-sol` route at `https://test-ai.oa-test.org/sub2api/v1/chat/completions`. Preserve the judge's credential protection and failure behavior. The existing `WORK_API_REQUIRED=true` setting protects the model client when it is used; it does not require sending general project work through `online/work_api.py`.
+
+Real business-function tests must call their business endpoints and collect authenticated internal Trace. Do not represent a local model response as a business test or as an API execution. Keep passwords, tokens, OTPs, and authorization material out of source, prompts, command logs, reports, and Git. Report actual endpoint/model provenance for judge calls without credentials, and claim host operations only when tool results verify them.

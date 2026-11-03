@@ -1,0 +1,30 @@
+---
+description: Persistent pre login and OTP safety policy
+alwaysApply: true
+---
+
+# Pre login policy
+
+- Finish and persist the login policy before resuming interrupted annaz/anna390 diagnostics.
+- Only explicit pre password-authentication-stage failures may enter the existing OTP flow once.
+- Missing business password, EMAIL_CODE requirements and rejected password authentication qualify.
+- Joined-list, company, tenant, user, device, permission and post-authentication failures never qualify.
+- Preserve all existing identity and authorization checks; never catch the entire pwd_login as fallback.
+- For pre annaz, pin the reader mailbox to a16621325482@gmail.com regardless of global mailbox overrides.
+- Keep annaz's real login_account as the business OTP recipient.
+- Resolve that shared mailbox's own protected Password2/mailbox_password through the existing resolver.
+- Never use annaz's other mailbox password for the shared mailbox or duplicate credential configuration.
+- Preserve other routes, including Outlook proxy and anna390's own UserEmail plus Password2.
+- Gmail uses Password2 only, never the SaaS Password as an app-password fallback.
+- Remove Unicode whitespace from Gmail app passwords in memory only; require 16 ASCII letters.
+- Missing or malformed app passwords fail immediately with sanitized configuration errors before sending.
+- Do not modify workbook values or internal whitespace of ordinary non-Gmail passwords.
+- Match the current send timestamp, trusted sender and actual recipient; reject stale or wrong-account OTP.
+- Keep polling and resends bounded; log stages, counts and fixed error categories only.
+- Never log OTP, passwords, tokens, full responses or request headers.
+- Test remains fixed 123456 without password login; reuse valid sessions and refresh only on expiry.
+- Do not change production, attendance idempotency prohibitions, permissions or unrelated scoring/work.
+- Offline regressions mock network, mailbox and account getters; never run live test discovery.
+- After policy verification resume authorized annaz/anna390 diagnosis, then pre cases, safe data repair,
+  agreed primary/reviewer reports and Git publication; do not request repeated general authorization.
+- Credentials stay in protected local configuration and never enter work-API context or Git.

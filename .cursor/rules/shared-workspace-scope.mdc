@@ -1,0 +1,8 @@
+---
+description: Cross-company workspace, project, and task visibility for AI assistant evaluation
+alwaysApply: true
+---
+
+For AI assistant evaluation in this repository, treat workspace, project, and task data created under the automation testing company as shared across company/tenant contexts for the same email account, unless a case explicitly defines a narrower ACL. Do not mark fixtures unavailable or unauthorized solely because their creator company/tenant differs from the test actor's selected company.
+
+Match fixtures by stable real object IDs and the intended email-account identity. A company-filtered inventory endpoint returning no rows is a scope/filter discrepancy, not by itself proof that the actor lacks access; record it, then evaluate access through the intended assistant actor and its actual retrieval result. Preserve explicit case-level ACLs and negative authorization expectations. Related task content follows task visibility unless the case defines a separate restriction.
