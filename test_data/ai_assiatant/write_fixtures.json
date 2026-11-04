@@ -1,0 +1,224 @@
+{
+  "contract": "ai_assistant.write_fixtures.v1",
+  "purpose": "write_only",
+  "environments": {
+    "test": {
+      "own": {
+        "verified": true,
+        "purpose": "write_only",
+        "batch_id": "W20261104A",
+        "space": "1238111055",
+        "project": "pro_4021092657",
+        "task": "task_vzycx9tkz7tu",
+        "tenant": "T1120BFPA",
+        "company": "orvglfbb9yi5to",
+        "refs": [
+          "WR-TEST-W20261104A-OWN-SPACE",
+          "WR-TEST-W20261104A-OWN-PROJECT",
+          "WR-TEST-W20261104A-OWN-TASK"
+        ],
+        "reader": {
+          "account_ref": "CFO",
+          "user_name": "CFO",
+          "company": "自动化测试公司",
+          "company_name": "自动化测试公司",
+          "tenant_id": "T1120BFPA",
+          "company_id": "orvglfbb9yi5to",
+          "user_id": "ouvgllrjy9w5yw"
+        },
+        "verified_at": "2026-11-04T03:13:02+00:00",
+        "space_type": 1
+      },
+      "foreign": {
+        "verified": true,
+        "purpose": "write_only",
+        "batch_id": "W20261104A",
+        "space": "60878233",
+        "project": "pro_3400876391",
+        "task": "task_vzycsrqoefhg",
+        "tenant": "T1120BGCN",
+        "company": "orvfgkbnd26yv7",
+        "refs": [
+          "WR-TEST-W20261104A-FOREIGN-SPACE",
+          "WR-TEST-W20261104A-FOREIGN-PROJECT",
+          "WR-TEST-W20261104A-FOREIGN-TASK"
+        ],
+        "reader": {
+          "account_ref": "智本_anrou",
+          "user_name": "智本_anrou",
+          "company": "智本科技",
+          "company_name": "智本科技",
+          "tenant_id": "T1120BGCN",
+          "company_id": "orvfgkbnd26yv7",
+          "user_id": "ouvfhdgghjp37n"
+        },
+        "verified_at": "2026-11-04T03:13:10+00:00",
+        "space_type": 1
+      }
+    },
+    "pre": {
+      "own": {
+        "verified": true,
+        "purpose": "write_only",
+        "batch_id": "W20261104A",
+        "space": "2306348781",
+        "project": "pro_3790598280",
+        "task": "task_vzyjfwrplie5",
+        "tenant": "T1120J0W9",
+        "company": "orv8athhpqnxrv",
+        "refs": [
+          "WR-PRE-W20261104A-OWN-SPACE",
+          "WR-PRE-W20261104A-OWN-PROJECT",
+          "WR-PRE-W20261104A-OWN-TASK"
+        ],
+        "reader": {
+          "account_ref": "智本测试_安柔",
+          "user_name": "智本测试_安柔",
+          "company": "智本企业",
+          "company_name": "智本企业",
+          "tenant_id": "T1120J0W9",
+          "company_id": "orv8athhpqnxrv",
+          "user_id": "ouvdiekzrxcqc2"
+        },
+        "verified_at": "2026-11-04T03:32:01+00:00",
+        "space_type": 1
+      },
+      "foreign": {
+        "verified": true,
+        "purpose": "write_only",
+        "batch_id": "W20261104A",
+        "space": "1038493799",
+        "project": "pro_1928193939",
+        "task": "task_vzyjibsox4tz",
+        "tenant": "T1120XCTS",
+        "company": "orv4clcljihqbq",
+        "refs": [
+          "WR-PRE-W20261104A-FOREIGN-SPACE",
+          "WR-PRE-W20261104A-FOREIGN-PROJECT",
+          "WR-PRE-W20261104A-FOREIGN-TASK"
+        ],
+        "reader": {
+          "account_ref": "智本测试1_安柔",
+          "user_name": "智本测试1_安柔",
+          "company": "智本测试企业(1)",
+          "company_name": "智本测试企业(1)",
+          "tenant_id": "T1120XCTS",
+          "company_id": "orv4clcljihqbq",
+          "user_id": "ouv4xqrqucqabu"
+        },
+        "verified_at": "2026-11-04T03:32:13+00:00",
+        "space_type": 1
+      }
+    }
+  },
+  "history": [
+    {
+      "environment": "test",
+      "replaced_by_batch_id": "W20261104A",
+      "fixtures": {
+        "own": {
+          "verified": true,
+          "purpose": "write_only",
+          "space": "3059499395",
+          "project": "pro_2384850177",
+          "task": "task_vzy4ux3qnpxv",
+          "tenant": "T1120BFPA",
+          "company": "orvglfbb9yi5to",
+          "refs": [
+            "WR-TEST-OWN-SPACE",
+            "WR-TEST-OWN-PROJECT",
+            "WR-TEST-OWN-TASK-ACCESS"
+          ],
+          "reader": {
+            "account_ref": "CFO",
+            "user_name": "CFO",
+            "company": "自动化测试公司",
+            "company_name": "自动化测试公司",
+            "tenant_id": "T1120BFPA",
+            "company_id": "orvglfbb9yi5to",
+            "user_id": "ouvgllrjy9w5yw"
+          },
+          "verified_at": "2026-11-04T02:38:29.451900+00:00"
+        },
+        "foreign": {
+          "verified": true,
+          "purpose": "write_only",
+          "space": "2029227054",
+          "project": "pro_967848882",
+          "task": "task_vzy4xlgizo1r",
+          "tenant": "T1120BGCN",
+          "company": "orvfgkbnd26yv7",
+          "refs": [
+            "WR-TEST-FOREIGN-SPACE",
+            "WR-TEST-FOREIGN-PROJECT",
+            "WR-TEST-FOREIGN-TASK-ACCESS"
+          ],
+          "reader": {
+            "account_ref": "智本_anrou",
+            "user_name": "智本_anrou",
+            "company": "智本科技",
+            "company_name": "智本科技",
+            "tenant_id": "T1120BGCN",
+            "company_id": "orvfgkbnd26yv7",
+            "user_id": "ouvfhdgghjp37n"
+          },
+          "verified_at": "2026-11-04T02:38:34.174622+00:00"
+        }
+      }
+    },
+    {
+      "environment": "pre",
+      "replaced_by_batch_id": "W20261104A",
+      "fixtures": {
+        "own": {
+          "verified": true,
+          "purpose": "write_only",
+          "space": "3683232967",
+          "project": "pro_2818400182",
+          "task": "task_vzy0sk1wqluq",
+          "tenant": "T1120J0W9",
+          "company": "orv8athhpqnxrv",
+          "refs": [
+            "WR-PRE-OWN-SPACE",
+            "WR-PRE-OWN-PROJECT",
+            "WR-PRE-OWN-TASK"
+          ],
+          "reader": {
+            "account_ref": "智本测试_安柔",
+            "user_name": "智本测试_安柔",
+            "company": "智本企业",
+            "company_name": "智本企业",
+            "tenant_id": "T1120J0W9",
+            "company_id": "orv8athhpqnxrv",
+            "user_id": "ouvdiekzrxcqc2"
+          },
+          "verified_at": "2026-11-04T02:20:43.527315+00:00"
+        },
+        "foreign": {
+          "verified": true,
+          "purpose": "write_only",
+          "space": "2271937426",
+          "project": "pro_3653711176",
+          "task": "task_vzy0vgrawcwn",
+          "tenant": "T1120XCTS",
+          "company": "orv4clcljihqbq",
+          "refs": [
+            "WR-PRE-FOREIGN-SPACE",
+            "WR-PRE-FOREIGN-PROJECT",
+            "WR-PRE-FOREIGN-TASK"
+          ],
+          "reader": {
+            "account_ref": "智本测试1_安柔",
+            "user_name": "智本测试1_安柔",
+            "company": "智本测试企业(1)",
+            "company_name": "智本测试企业(1)",
+            "tenant_id": "T1120XCTS",
+            "company_id": "orv4clcljihqbq",
+            "user_id": "ouv4xqrqucqabu"
+          },
+          "verified_at": "2026-11-04T02:20:51.584802+00:00"
+        }
+      }
+    }
+  ]
+}

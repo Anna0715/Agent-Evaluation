@@ -1,0 +1,13 @@
+---
+description: Use a fresh dedicated fixture batch for every automated AI-assistant write run
+alwaysApply: true
+---
+
+# AI-assistant write isolation
+
+- Before any test/pre project, task or comment write case, pin the fresh authenticated same-environment review baseline and skip saved deferred cases before preparation.
+- Provision a new uniquely marked write-only space, project and task chain for each execution batch. Never reuse prior run targets or objects from read/statistics cases. Fail closed if a batch ID or object ID has already been bound to write cases.
+- Verify each target through authenticated business APIs: space type and tenant, project parent and tenant, task parent and tenant, and the target reader identity. For cross-tenant rejection cases, verify the foreign space, project and task are visible to the asker while their tenant differs from the asker's tenant.
+- Rebind both workbook questions and structured assertions to the current batch before sending questions. Use a new case session when requested, preserve follow-up turns in that session, and save each session ID to the workbook.
+- Use a unique marker per case run and read the business source after every turn. A positive case may create only its expected one object after clarification; a cross-tenant case must leave zero marked objects in the foreign tenant. Preserve unexpected object IDs in evidence.
+- Trial writes on shared fixtures may be cleaned only after exact marker, object ID, tenant, creator and child-data checks. Checkpoint each deletion and independently read back the active-object count. Keep the original report and pre-cleanup audit intact.
